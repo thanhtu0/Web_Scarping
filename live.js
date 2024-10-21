@@ -297,7 +297,7 @@ async function scrapeData() {
 			if (fs.existsSync('live.json')) {
 				const previousData = JSON.parse(fs.readFileSync('live.json', 'utf8'));
 
-				fs.writeFileSync('oldLive', JSON.stringify(previousData, null, 2), (err) => {
+				fs.writeFileSync('oldLive.json', JSON.stringify(previousData, null, 2), (err) => {
 					if (err) throw err;
 				});
 			}
@@ -308,9 +308,10 @@ async function scrapeData() {
 
 			await browser.close();
 
-			setTimeout(scrapeData, 5 * 60 * 1000);
+			setTimeout(scrapeData, 1000);
 		} catch (error) {
 			await page.waitForSelector('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
+
 			const noEvents = await page.$('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
 			if (noEvents) {
 				fs.writeFile('live.json', JSON.stringify([], null, 2), (err) => {
@@ -320,7 +321,7 @@ async function scrapeData() {
 
 				await browser.close();
 
-				setTimeout(scrapeData, 5 * 60 * 1000);
+				setTimeout(scrapeData, 1000);
 				return;
 			} else {
 				console.error('Error scraping data: ', error.message);
@@ -328,7 +329,7 @@ async function scrapeData() {
 		}
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 5 * 60 * 1000);
+		setTimeout(scrapeData, 1000);
 	}
 }
 
