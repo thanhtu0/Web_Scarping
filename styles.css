@@ -1,0 +1,318 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', 'Helvetica Neue';
+	background-color: #f0f2f5;
+}
+
+.header-content {
+	position: relative;
+	width: 90%;
+	height: 150px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	background: url('https://www.pinnacle.com/img/headers/sports/single/baseball.jpg');
+	color: white;
+	margin-bottom: 15px;
+}
+.top,
+.center {
+	padding-left: 15px;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+}
+
+.top {
+	height: 35px;
+}
+
+.center {
+	height: 45px;
+	margin-top: 10px;
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 45px;
+}
+
+.breadcrumbs {
+	font-size: 18px;
+}
+
+.breadcrumbs a {
+	font-weight: 700;
+	position: relative;
+	text-decoration: none;
+	color: white;
+	padding-bottom: 2px;
+}
+
+.breadcrumbs span {
+	padding: 5px;
+}
+
+.breadcrumbs a::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background-color: white;
+	transition: width 0.3s ease;
+}
+
+.breadcrumbs a:hover::before {
+	width: 100%;
+}
+
+.nav-bar {
+	margin-top: 20px;
+	background-color: rgba(7, 36, 67, 0.5);
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-tabs {
+	list-style: none;
+	display: flex;
+}
+
+.nav-tabs a {
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	color: #bdc2c9;
+	padding: 10px 20px;
+	display: block;
+	border-bottom: 2px solid transparent;
+}
+
+.nav-tabs a:hover,
+.nav-tabs .active {
+	border-bottom: 5px solid #ff5722;
+}
+.nav-tabs .active {
+	color: white;
+}
+
+.content {
+	width: 90%;
+	margin: 0 auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+		rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+caption {
+	background-color: #072443;
+	color: white;
+	font-weight: bold;
+	height: 35px;
+	line-height: 25px;
+}
+
+th {
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+
+caption,
+th,
+td {
+	border-bottom: 0.1px solid black;
+}
+caption,
+th,
+td,
+h1 {
+	padding: 5px 15px;
+	text-align: center;
+}
+th:nth-child(1) i {
+	margin-left: 5px;
+}
+th:nth-child(1) {
+	width: 40%;
+}
+th:nth-child(2),
+th:nth-child(3),
+th:nth-child(4) {
+	width: 20%;
+}
+
+th:nth-child(1),
+td:nth-child(1),
+caption {
+	text-align: left;
+}
+
+th:last-child span {
+	padding: 10px 12.5px;
+}
+
+th,
+th a,
+.timeMatch {
+	color: #a6a7a9;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+td a {
+	color: black;
+	text-decoration: none;
+}
+td:not(:nth-child(1)) strong {
+	color: #0a74ef;
+}
+#clock {
+	font-size: 18px;
+	color: #a6a7a9;
+	margin-top: 10px;
+}
+
+td button {
+	width: 80px;
+	height: 40px;
+	background-color: transparent;
+	border-radius: 5px;
+	font-size: 12px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+td .icon {
+	width: 40px;
+	height: 40px;
+	color: #95999f;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+		rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+td .icon:hover,
+td .icon.selected,
+td .icon:active {
+	background-color: transparent;
+	color: black;
+	background-color: #c4c4c4;
+	border-color: black;
+}
+
+td .btn-selected:hover {
+	border-color: #ff5500;
+}
+
+td .btn-selected.selected strong,
+td .btn-selected:active strong,
+td .btn-selected.selected,
+td .btn-selected:active {
+	background-color: #ff5500;
+	color: white;
+	border-color: #ff5500;
+}
+
+.text {
+	width: 90%;
+	height: 84px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	color: black;
+}
+
+.text h5 {
+	font-weight: 700;
+	font-size: 24px;
+}
+
+.text span {
+	margin-top: 5px;
+}
+
+.text a {
+	font-size: 24px;
+	font-weight: 700;
+	color: #ff5722;
+	margin-top: 20px;
+}
+
+.live {
+	display: flex;
+	flex-direction: column;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
+		rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+.live-title {
+	background-color: #072443;
+	padding: 5px 10px;
+	height: 35px;
+	border-bottom: 3px solid #0fa810;
+	width: 100%;
+	color: white;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 20px;
+}
+.live-content {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin-top: 20px;
+}
+.live-content .first-text {
+	font-size: 20px;
+	font-weight: 700;
+}
+.live-content .second-text {
+	margin-top: 10px;
+	font-size: 16px;
+	color: #666;
+}
+.live-content img {
+	width: 36px;
+	height: 36px;
+}
+.live-now {
+	color: #0fa810;
+	font-weight: bold;
+}
+
+.handicap-container {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.handicap-container .oneValue {
+	flex: 1;
+	text-align: center;
+}
+
+.total-container {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.total-container .oneValue {
+	flex: 1;
+	text-align: center;
+}
+
+button:disabled {
+	background-color: #f0f0f0;
+	color: #c4c4c4;
+	border: 1px solid #c4c4c4;
+	cursor: not-allowed;
+}

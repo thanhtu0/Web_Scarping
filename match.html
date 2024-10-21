@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+			integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer" />
+		<link
+			rel="stylesheet"
+			href="./styles.css" />
+		<title>Baseball Odds || Baseball Betting</title>
+	</head>
+	<body>
+		<h1>
+			Baseball Match Data
+			<div id="clock">Loading time...</div>
+		</h1>
+		<div class="header-content">
+			<div class="top">
+				<div class="breadcrumbs">
+					<a href="#">Home</a>
+					<span>/</span>
+					Baseball
+				</div>
+			</div>
+			<div class="center">
+				<p class="title">Baseball Odds</p>
+			</div>
+			<div class="nav-bar">
+				<nav>
+					<ul class="nav-tabs">
+						<li>
+							<a
+								href="#"
+								class="active"
+								>MATCHUP</a
+							>
+						</li>
+						<li><a href="./live.html">LIVE</a></li>
+						<li><a href="./league.html">LEAGUES</a></li>
+						<li><a href="">FUTURES</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div
+			id="content"
+			class="content"></div>
+		<div class="text">
+			<h5>Baseball betting</h5>
+			<span>Pinnacle offers the best Baseball odds and high limits for Baseball betting.</span>
+			<a href="">See more</a>
+		</div>
+		<script src="/updateTime.js"></script>
+		<script>
+			fetch('match.json')
+				.then((response) => response.json())
+				.then((newData) => {
+					fetch('oldMatch.json')
+						.then((response) => response.json())
+						.then((oldData) => {
+							const contentDiv = document.getElementById('content');
+							// Compare new data with old data
+							newData.forEach((day, dayIndex) => {
+								const table = document.createElement('table');
+								const caption = document.createElement('caption');
+
+								caption.innerText = `${day.date}`;
+								table.appendChild(caption);
+
+								day.leagues.forEach((league, leagueIndex) => {
+									const headerRow = document.createElement('tr');
+									headerRow.innerHTML = `
+										<th colspan="5">
+											<a href="">
+												<strong>
+													${league.league}
+													<i class="fa-solid fa-angle-right"></i>
+												</strong>
+											</a>
+										</th>
+										<th>
+											Money Line
+										</th>
+										<th>
+											Handicap
+										</th>
+										<th>
+											<span>Over</span>
+											<span>Under</span>
+										</th>
+									`;
+									table.appendChild(headerRow);
+
+									league.games.forEach((game, gameIndex) => {
+										const row = document.createElement('tr');
+										const gameId = `game-${gameIndex}`;
+
+										// Get data from oldData
+										const oldGame = oldData[dayIndex]?.leagues[leagueIndex]?.games[gameIndex];
+
+										// Compare moneyLine.Home values
+										let moneyLineHomeArrow = '';
+										if (oldGame) {
+											if (parseFloat(game.moneyLine.Home) > parseFloat(oldGame.moneyLine.Home)) {
+												moneyLineHomeArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(game.moneyLine.Home) < parseFloat(oldGame.moneyLine.Home)
+											) {
+												moneyLineHomeArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										// Compare moneyLine.Away values
+										let moneyLineAwayArrow = '';
+										if (oldGame) {
+											if (parseFloat(game.moneyLine.Away) > parseFloat(oldGame.moneyLine.Away)) {
+												moneyLineAwayArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(game.moneyLine.Away) < parseFloat(oldGame.moneyLine.Away)
+											) {
+												moneyLineAwayArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										// Compare handicap.Home values
+										const homeValues = Object.values(game.handicap.Home);
+										const oldHomeValues = Object.values(oldGame?.handicap.Home || {});
+										const homeMiddleIndex = Math.floor(homeValues.length / 2);
+
+										let handicapHomeArrow = '';
+										if (oldHomeValues.length) {
+											if (
+												parseFloat(homeValues[homeMiddleIndex].price) >
+												parseFloat(oldHomeValues[homeMiddleIndex]?.price)
+											) {
+												handicapHomeArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(homeValues[homeMiddleIndex].price) <
+												parseFloat(oldHomeValues[homeMiddleIndex]?.price)
+											) {
+												handicapHomeArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										// Compare handicap.Away values
+										const awayValues = Object.values(game.handicap.Away);
+										const oldAwayValues = Object.values(oldGame?.handicap.Away || {});
+										const awayMiddleIndex = Math.floor(awayValues.length / 2);
+
+										let handicapAwayArrow = '';
+										if (oldAwayValues.length) {
+											if (
+												parseFloat(awayValues[awayMiddleIndex].price) >
+												parseFloat(oldAwayValues[awayMiddleIndex]?.price)
+											) {
+												handicapAwayArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(awayValues[awayMiddleIndex].price) <
+												parseFloat(oldAwayValues[awayMiddleIndex]?.price)
+											) {
+												handicapAwayArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										if (
+											homeValues[homeMiddleIndex].label === 'Currently Offline' &&
+											awayValues[awayMiddleIndex].label === 'Currently Offline'
+										) {
+											handicapHome = `<button style="cursor: not-allowed;" disabled>
+														<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+													</button>
+													`;
+											handicapAway = `<button style="cursor: not-allowed;" disabled>
+														<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+													</button>
+													`;
+										} else if (
+											homeValues[homeMiddleIndex].label === 'Unavailable' &&
+											awayValues[awayMiddleIndex].label === 'Unavailable'
+										) {
+											handicapHome = `<button style="cursor: not-allowed;" disabled>
+														<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+													</button>
+													`;
+											handicapAway = `<button style="cursor: not-allowed;" disabled>
+														<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+													</button>
+													`;
+										} else {
+											handicapHome = `<button style="cursor: pointer;" class="btn-selected" data-group="handicap" data-league="${league.league}" data-game="${gameId}">
+														${homeValues[homeMiddleIndex].label} <br />
+														<strong>
+															${homeValues[homeMiddleIndex].price} ${handicapHomeArrow}
+														</strong>
+													</button>
+													`;
+											handicapAway = `<button style="cursor: pointer;" class="btn-selected" data-group="handicap" data-league="${league.league}" data-game="${gameId}">
+														${awayValues[awayMiddleIndex].label} <br />
+														<strong>
+															${awayValues[awayMiddleIndex].price} ${handicapAwayArrow}
+														</strong>
+													</button>
+													`;
+										}
+
+										const allHandicapHome = Object.values(game.handicap.Home)
+											.map((h, index) => {
+												let allHandicapHomeArrow = '';
+												let buttonContent;
+
+												if (h.label === 'Currently Offline') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else if (h.label === 'Unavailable') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else {
+													if (oldGame && oldGame.handicap.Home) {
+														const oldValue = Object.values(oldGame.handicap.Home)[index];
+														if (oldValue) {
+															if (parseFloat(h.price) > parseFloat(oldValue.price)) {
+																allHandicapHomeArrow =
+																	'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+															} else if (
+																parseFloat(h.price) < parseFloat(oldValue.price)
+															) {
+																allHandicapHomeArrow =
+																	'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+															}
+														}
+													}
+
+													buttonContent = `
+														<button class="btn-selected" style="margin-bottom: 5px" data-group="handicap" data-league="${league.league}" data-game="${gameId}">
+															${h.label} <br />
+															<strong>
+																${h.price} ${allHandicapHomeArrow}
+															</strong>
+														</button>
+													`;
+												}
+
+												return buttonContent;
+											})
+											.join('<br>');
+
+										const allHandicapAway = Object.values(game.handicap.Away)
+											.map((h, index) => {
+												let allHandicapAwayArrow = '';
+												let buttonContent;
+
+												if (h.label === 'Currently Offline') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else if (h.label === 'Unavailable') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else {
+													if (oldGame && oldGame.handicap.Away) {
+														const oldValue = Object.values(oldGame.handicap.Away)[index];
+														if (oldValue) {
+															if (parseFloat(h.price) > parseFloat(oldValue.price)) {
+																allHandicapAwayArrow =
+																	'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+															} else if (
+																parseFloat(h.price) < parseFloat(oldValue.price)
+															) {
+																allHandicapAwayArrow =
+																	'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+															}
+														}
+													}
+
+													buttonContent = `
+														<button class="btn-selected" style="margin-bottom: 5px" data-group="handicap" data-league="${league.league}" data-game="${gameId}">
+															${h.label} <br />
+															<strong>
+																${h.price} ${allHandicapAwayArrow}
+															</strong>
+														</button>
+													`;
+												}
+
+												return buttonContent;
+											})
+											.join('<br>');
+
+										// Compare Over values
+										const overValues = Object.values(game.total.Over);
+										const oldOverValues = Object.values(oldGame?.total.Over || {});
+										const overMiddleIndex = Math.floor(overValues.length / 2);
+
+										let overArrow = '';
+										if (oldOverValues.length) {
+											if (
+												parseFloat(overValues[overMiddleIndex].price) >
+												parseFloat(oldOverValues[overMiddleIndex]?.price)
+											) {
+												overArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(overValues[overMiddleIndex].price) <
+												parseFloat(oldOverValues[overMiddleIndex]?.price)
+											) {
+												overArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										// Compare Under values
+										const underValues = Object.values(game.total.Under);
+										const oldUnderValues = Object.values(oldGame?.total.Under || {});
+										const underMiddleIndex = Math.floor(underValues.length / 2);
+
+										let underArrow = '';
+										if (oldUnderValues.length) {
+											if (
+												parseFloat(underValues[underMiddleIndex].price) >
+												parseFloat(oldUnderValues[underMiddleIndex]?.price)
+											) {
+												underArrow =
+													'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+											} else if (
+												parseFloat(underValues[underMiddleIndex].price) <
+												parseFloat(oldUnderValues[underMiddleIndex]?.price)
+											) {
+												underArrow =
+													'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+											}
+										}
+
+										const overLabel =
+											parseFloat(overValues[overMiddleIndex].label) % 1 === 0
+												? parseInt(overValues[overMiddleIndex].label)
+												: overValues[overMiddleIndex].label;
+
+										const underLabel =
+											parseFloat(underValues[underMiddleIndex].label) % 1 === 0
+												? parseInt(underValues[underMiddleIndex].label)
+												: underValues[underMiddleIndex].label;
+
+										let over, under;
+										if (
+											overValues[overMiddleIndex].label === 'Currently Offline' &&
+											underValues[underMiddleIndex].label === 'Currently Offline'
+										) {
+											over = `<button style="cursor: not-allowed;" disabled>
+												<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+											</button>
+											`;
+											under = `<button style="cursor: not-allowed;" disabled>
+												<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+											</button>
+											`;
+										} else if (
+											overValues[overMiddleIndex].label === 'Unavailable' &&
+											underValues[underMiddleIndex].label === 'Unavailable'
+										) {
+											over = `<button style="cursor: not-allowed;" disabled>
+												<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+											</button>
+											`;
+											under = `<button style="cursor: not-allowed;" disabled>
+												<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+											</button>
+											`;
+										} else {
+											over = `<button style="cursor: pointer;" class="btn-selected" data-group="total" data-league="${league.league}" data-game="${gameId}">
+												${overLabel} <br />
+												<strong>
+													${overValues[overMiddleIndex].price} ${overArrow}
+												</strong>
+											</button>
+											`;
+											under = `<button style="cursor: pointer;" class="btn-selected" data-group="total" data-league="${league.league}" data-game="${gameId}">
+												${underLabel} <br />
+												<strong>
+													${underValues[underMiddleIndex].price} ${underArrow}
+												</strong>
+											</button>
+											`;
+										}
+
+										const allOver = Object.values(game.total.Over)
+											.map((h, index) => {
+												let allOverArrow = '';
+												let buttonContent;
+
+												if (h.label === 'Currently Offline') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else if (h.label === 'Unavailable') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else {
+													if (oldGame && oldGame.total && oldGame.total.Over) {
+														const oldValue = Object.values(oldGame.total.Over)[index];
+														if (oldValue) {
+															if (parseFloat(h.price) > parseFloat(oldValue.price)) {
+																allOverArrow =
+																	'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+															} else if (
+																parseFloat(h.price) < parseFloat(oldValue.price)
+															) {
+																allOverArrow =
+																	'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+															}
+														}
+													}
+
+													buttonContent = `
+														<button class="btn-selected" style="margin-bottom: 5px" data-group="total" data-league="${
+															league.league
+														}" data-game="${gameId}">
+															${parseFloat(h.label) % 1 === 0 ? parseInt(h.label) : h.label}
+															<br />
+															<strong>
+																${h.price} ${allOverArrow}
+															</strong>
+														</button>
+													`;
+												}
+
+												return buttonContent;
+											})
+											.join('<br>');
+
+										const allUnder = Object.values(game.total.Under)
+											.map((h, index) => {
+												let allUnderArrow = '';
+												let buttonContent;
+
+												if (h.label === 'Currently Offline') {
+													buttonContent = `
+														<button style="cursor: not-allowed;" disabled>
+															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
+														</button>
+													`;
+												} else if (h.label === 'Unavailable') {
+													buttonContent = `
+															<button style="cursor: not-allowed;" disabled>
+																<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
+															</button>
+														`;
+												} else {
+													if (oldGame && oldGame.total && oldGame.total.Under) {
+														const oldValue = Object.values(oldGame.total.Under)[index];
+														if (oldValue) {
+															if (parseFloat(h.price) > parseFloat(oldValue.price)) {
+																allUnderArrow =
+																	'<i class="fa-solid fa-arrow-up" style="color: green;"></i>';
+															} else if (
+																parseFloat(h.price) < parseFloat(oldValue.price)
+															) {
+																allUnderArrow =
+																	'<i class="fa-solid fa-arrow-down" style="color: red;"></i>';
+															}
+														}
+													}
+
+													buttonContent = `
+														<button class="btn-selected" style="margin-bottom: 5px" data-group="total" data-league="${
+															league.league
+														}" data-game="${gameId}">
+															${parseFloat(h.label) % 1 === 0 ? parseInt(h.label) : h.label}
+															<br />
+															<strong>
+																${h.price} ${allUnderArrow}
+															</strong>
+														</button>
+													`;
+												}
+
+												return buttonContent;
+											})
+											.join('<br>');
+
+										row.innerHTML = `
+											<td colspan="5">
+												<strong>
+													${game.Home}
+													<br />
+													${game.Away}
+												</strong>
+												<br />
+												<span class="timeMatch"">
+													${game.startTime}
+												</span>
+											</td>
+											<td>
+												<button
+													style="cursor: ${
+														game.moneyLine.Home === 'Currently Offline' ||
+														game.moneyLine.Home === 'Unavailable'
+															? 'not-allowed'
+															: 'pointer'
+													};"
+													${game.moneyLine.Home === 'Currently Offline' || game.moneyLine.Home === 'Unavailable' ? 'disabled' : ''}
+													class="btn-selected" data-group="moneyLine" data-league="${league.league}" data-game="${gameId}"
+												>
+												<strong>
+													${
+														game.moneyLine.Home === 'Currently Offline'
+															? '<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>'
+															: game.moneyLine.Home === 'Unavailable'
+															? '<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>'
+															: `${game.moneyLine.Home} ${moneyLineHomeArrow}`
+													}
+												</strong>
+												</button>
+
+												<button
+													style="cursor: ${
+														game.moneyLine.Away === 'Currently Offline' ||
+														game.moneyLine.Away === 'Unavailable'
+															? 'not-allowed'
+															: 'pointer'
+													};"
+													${game.moneyLine.Away === 'Currently Offline' || game.moneyLine.Away === 'Unavailable' ? 'disabled' : ''}
+													class="btn-selected" data-group="moneyLine" data-league="${league.league}" data-game="${gameId}"
+												>
+													<strong>
+														${
+															game.moneyLine.Away === 'Currently Offline'
+																? '<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>'
+																: game.moneyLine.Away === 'Unavailable'
+																? '<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>'
+																: `${game.moneyLine.Away} ${moneyLineAwayArrow}`
+														}
+													</strong>
+												</button>
+											</td>
+											<td>
+												<div class="handicap-container">
+													<div class="oneValue handicap">${handicapHome}</div>
+													<div
+														class="allValues handicap"
+														style="display: none">
+														${allHandicapHome}
+													</div>
+													<button
+														class="icon handicap-icon"
+														type="submit">
+														<i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i>
+													</button>
+													<div
+														class="allValues handicap"
+														style="display: none">
+														${allHandicapAway}
+													</div>
+													<div class="oneValue handicap">${handicapAway}</div>
+												</div>
+											</td>
+											<td>
+												<div class="total-container">
+													<div class="oneValue total">${over}</div>
+													<div
+														class="allValues total"
+														style="display: none">
+														${allOver}
+													</div>
+													<button
+														class="icon total-icon"
+														type="submit">
+														<i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i>
+													</button>
+													<div class="oneValue total">${under}</div>
+													<div
+														class="allValues total"
+														style="display: none">
+														${allUnder}
+													</div>
+												</div>
+											</td>
+										`;
+										table.appendChild(row);
+									});
+								});
+
+								contentDiv.appendChild(table);
+							});
+
+							const buttons = document.querySelectorAll('td button');
+
+							function handleButtonClick(event, groupName, gameId, league) {
+								const currentButton = event.currentTarget;
+
+								const groupButtons = document.querySelectorAll(
+									`td button[data-group="${groupName}"][data-game="${gameId}"][data-league="${league}"]`
+								);
+
+								if (currentButton.classList.contains('selected')) {
+									currentButton.classList.remove('selected');
+								} else {
+									groupButtons.forEach((button) => button.classList.remove('selected'));
+									currentButton.classList.add('selected');
+								}
+							}
+
+							buttons.forEach((button) => {
+								const group = button.getAttribute('data-group');
+								const gameId = button.getAttribute('data-game');
+								const league = button.getAttribute('data-league');
+
+								button.addEventListener('click', function (event) {
+									handleButtonClick(event, group, gameId, league);
+								});
+							});
+
+							const toggleButtons = document.querySelectorAll('button.icon');
+
+							toggleButtons.forEach((toggleButton) => {
+								toggleButton.addEventListener('click', function () {
+									const row = toggleButton.closest('tr');
+
+									const type = toggleButton.classList.contains('handicap-icon')
+										? 'handicap'
+										: 'total';
+
+									const allValuesDiv = row.querySelectorAll(`.allValues.${type}`);
+									const oneValuesDiv = row.querySelectorAll(`.oneValue.${type}`);
+
+									allValuesDiv.forEach((div) => {
+										if (div.style.display === 'none' || div.style.display === '') {
+											div.style.display = 'block';
+											oneValuesDiv.forEach((oneDiv) => (oneDiv.style.display = 'none'));
+											toggleButton.classList.add('active');
+										} else {
+											div.style.display = 'none';
+											oneValuesDiv.forEach((oneDiv) => (oneDiv.style.display = 'block'));
+											toggleButton.classList.remove('active');
+										}
+									});
+
+									toggleButton.classList.toggle('active');
+								});
+							});
+						})
+						.catch((error) => console.error('Error loading old data:', error.message));
+				})
+				.catch((error) => console.error('Error loading data:', error.message));
+		</script>
+	</body>
+</html>
