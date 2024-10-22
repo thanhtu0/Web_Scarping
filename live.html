@@ -75,45 +75,46 @@
 
 							if (!newData || newData.length === 0) {
 								contentDiv.innerHTML = `
-							<div class="live">
-								<div class="live-title">
-									<span>Live</span>
-								</div>
-								<div class="live-content">
-									<div class="img">
-										<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjIycHgiIGhlaWdodD0iMjVweCIgdmlld0JveD0iMCAwIDIyIDI1IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBza2V0Y2h0b29sIDUwLjIgKDU1MDQ3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4NCiAgICA8dGl0bGU+RTI2NUNDMzQtMDBDNi00QkRBLTlCN0EtMTMyMTJERDFEMkEwPC90aXRsZT4NCiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggc2tldGNodG9vbC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJXYWdlcmluZy1qb3VybmV5LS0tZGVza3RvcCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+DQogICAgICAgIDxnIGlkPSJIb21lLXBhZ2UtLS1Oby1saXZlLWV2ZW50IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTgxLjAwMDAwMCwgLTQyNi4wMDAwMDApIiBmaWxsPSIjNzI3NzdGIj4NCiAgICAgICAgICAgIDxwYXRoIGQ9Ik01OTguNDM0NzE5LDQ0NC44MzgwMzIgQzU5OS4xMDEyMjYsNDQzLjcwODc5NSA1OTkuNDg5MDk4LDQ0Mi40MDA1OTEgNTk5LjQ4OTA5OCw0NDEgQzU5OS40ODkwOTgsNDM2Ljc3MTgzIDU5Ni4wMDkzMzEsNDMzLjM0Mzk5NyA1OTEuNzE2MzUyLDQzMy4zNDM5OTcgQzU5MC4zMzc0MjcsNDMzLjM0Mzk5NyA1ODkuMDQ1MDQ4LDQzMy43MDA4NzYgNTg3LjkyMjA2Niw0MzQuMzIxMTkxIEw1OTEuNzE2MzUyLDQzOC4xMTc1MTcgTDU5MS43MTYzNTIsNDM0Ljc1MDM5NiBDNTk1LjIyMDkyMiw0MzQuNzUwMzk2IDU5OC4wNjE2MjMsNDM3LjU0Nzg4MyA1OTguMDYxNjIzLDQ0MSBDNTk4LjA2MTYyMyw0NDIuMDA0NjQ2IDU5Ny44MTUxNzksNDQyLjk1MDE2NCA1OTcuMzg3NzI4LDQ0My43OTExNTIgTDU5OC40MzQ3MTksNDQ0LjgzODAzMiBaIE02MDMsNDQ5LjQwNTEzMSBMNjAxLjY4MDcwNyw0NTAuNzI0OTUgTDU4MSw0MzAuMDM2NTMzIEw1ODIuMzE5MjkzLDQyOC43MTY3MTQgTDU4Ni4yMDg1NjgsNDMyLjYwNzUzOSBDNTg3Ljc5NTk0MSw0MzEuNTk0NDQ2IDU4OS42ODQxMTMsNDMxIDU5MS43MTYzNTIsNDMxIEM1OTcuMzIzMzQ3LDQzMSA2MDEuODY4NTc0LDQzNS40NzczNTIgNjAxLjg2ODU3NCw0NDEgQzYwMS44Njg1NzQsNDQzLjA1Nzg2MSA2MDEuMjM2MzY5LDQ0NC45Njg5NTggNjAwLjE1NDU0OSw0NDYuNTU5MDc1IEw2MDMsNDQ5LjQwNTEzMSBaIE01OTEuNzE2MzUyLDQ0OC42NTYwMDMgQzU4Ny40MjM5MDEsNDQ4LjY1NjAwMyA1ODMuOTQzNjA2LDQ0NS4yMjgxNyA1ODMuOTQzNjA2LDQ0MSBDNTgzLjk0MzYwNiw0MzkuNDczNzYyIDU4NC40MDIxOTIsNDM4LjA1NTIyMSA1ODUuMTgzNzQyLDQzNi44NjE1NzcgTDU4My40ODU1NDgsNDM1LjE2MjE3OSBDNTgyLjI4MTgyNSw0MzYuODA2MTQ1IDU4MS41NjQxMyw0MzguODE4NjA0IDU4MS41NjQxMyw0NDEgQzU4MS41NjQxMyw0NDYuNTIyNjQ4IDU4Ni4xMDk4ODUsNDUxIDU5MS43MTYzNTIsNDUxIEM1OTMuODc1MjQzLDQ1MSA1OTUuODcyNjUyLDQ1MC4zMzExMTYgNTk3LjUxNzU0Nyw0NDkuMjAwMjk2IEw1OTUuODE1MTMxLDQ0Ny40OTY2NzQgQzU5NC42MjQwNzMsNDQ4LjIyNzMyNiA1OTMuMjIyOTg0LDQ0OC42NTYwMDMgNTkxLjcxNjM1Miw0NDguNjU2MDAzIFogTTYwMS40MDMxMjgsNDMxLjM2Mzc0MiBMNTk4LjIwMzA1MSw0MjkuMTI0ODAyIEw1OTcuMTgyOTc0LDQzMC41ODAyOTggTDYwMC4zODMwNTEsNDMyLjgxODE4MiBMNjAxLjQwMzEyOCw0MzEuMzYzNzQyIFogTTU5MC40NDc3Miw0MjkuNzUwMzk2IEw1OTIuOTg1NTEyLDQyOS43NTAzOTYgTDU5Mi45ODU1MTIsNDI4LjUwMDI2NCBMNTk0LjI1NDY3MSw0MjguNTAwMjY0IEw1OTQuMjU0NjcxLDQyNiBMNTg5LjE3ODU2LDQyNiBMNTg5LjE3ODU2LDQyOC41MDAyNjQgTDU5MC40NDc3Miw0MjguNTAwMjY0IEw1OTAuNDQ3NzIsNDI5Ljc1MDM5NiBaIE01ODUuMzcxNjA5LDQ0MSBMNTg5LjMyMDUxNiw0NDEgTDU5NC43ODY2MSw0NDYuNDY4MjcyIEM1OTMuODc2ODI2LDQ0Ni45NjUwNTEgNTkyLjgzMDg5MSw0NDcuMjUwMTMyIDU5MS43MTYzNTIsNDQ3LjI1MDEzMiBDNTg4LjIxMjMxLDQ0Ny4yNTAxMzIgNTg1LjM3MTYwOSw0NDQuNDUyMTE3IDU4NS4zNzE2MDksNDQxIFoiIGlkPSJub0xpdmUiPjwvcGF0aD4NCiAgICAgICAgPC9nPg0KICAgIDwvZz4NCjwvc3ZnPg==" alt="There are no events to show.">
-									</div>
-									<div class="text">
-										<div class="first-text"><span>There are currently no live events to show for this sport.</span></div>
-										<div class="second-text"><span>Please select a different sport for live events.</span></div>
-									</div>
-								</div>
-							</div>
-						`;
+										<div class="live">
+											<div class="live-title">
+												<span>Live</span>
+											</div>
+											<div class="live-content">
+												<div class="img">
+													<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgd2lkdGg9IjIycHgiIGhlaWdodD0iMjVweCIgdmlld0JveD0iMCAwIDIyIDI1IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICAgIDwhLS0gR2VuZXJhdG9yOiBza2V0Y2h0b29sIDUwLjIgKDU1MDQ3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4NCiAgICA8dGl0bGU+RTI2NUNDMzQtMDBDNi00QkRBLTlCN0EtMTMyMTJERDFEMkEwPC90aXRsZT4NCiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggc2tldGNodG9vbC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJXYWdlcmluZy1qb3VybmV5LS0tZGVza3RvcCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+DQogICAgICAgIDxnIGlkPSJIb21lLXBhZ2UtLS1Oby1saXZlLWV2ZW50IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTgxLjAwMDAwMCwgLTQyNi4wMDAwMDApIiBmaWxsPSIjNzI3NzdGIj4NCiAgICAgICAgICAgIDxwYXRoIGQ9Ik01OTguNDM0NzE5LDQ0NC44MzgwMzIgQzU5OS4xMDEyMjYsNDQzLjcwODc5NSA1OTkuNDg5MDk4LDQ0Mi40MDA1OTEgNTk5LjQ4OTA5OCw0NDEgQzU5OS40ODkwOTgsNDM2Ljc3MTgzIDU5Ni4wMDkzMzEsNDMzLjM0Mzk5NyA1OTEuNzE2MzUyLDQzMy4zNDM5OTcgQzU5MC4zMzc0MjcsNDMzLjM0Mzk5NyA1ODkuMDQ1MDQ4LDQzMy43MDA4NzYgNTg3LjkyMjA2Niw0MzQuMzIxMTkxIEw1OTEuNzE2MzUyLDQzOC4xMTc1MTcgTDU5MS43MTYzNTIsNDM0Ljc1MDM5NiBDNTk1LjIyMDkyMiw0MzQuNzUwMzk2IDU5OC4wNjE2MjMsNDM3LjU0Nzg4MyA1OTguMDYxNjIzLDQ0MSBDNTk4LjA2MTYyMyw0NDIuMDA0NjQ2IDU5Ny44MTUxNzksNDQyLjk1MDE2NCA1OTcuMzg3NzI4LDQ0My43OTExNTIgTDU5OC40MzQ3MTksNDQ0LjgzODAzMiBaIE02MDMsNDQ5LjQwNTEzMSBMNjAxLjY4MDcwNyw0NTAuNzI0OTUgTDU4MSw0MzAuMDM2NTMzIEw1ODIuMzE5MjkzLDQyOC43MTY3MTQgTDU4Ni4yMDg1NjgsNDMyLjYwNzUzOSBDNTg3Ljc5NTk0MSw0MzEuNTk0NDQ2IDU4OS42ODQxMTMsNDMxIDU5MS43MTYzNTIsNDMxIEM1OTcuMzIzMzQ3LDQzMSA2MDEuODY4NTc0LDQzNS40NzczNTIgNjAxLjg2ODU3NCw0NDEgQzYwMS44Njg1NzQsNDQzLjA1Nzg2MSA2MDEuMjM2MzY5LDQ0NC45Njg5NTggNjAwLjE1NDU0OSw0NDYuNTU5MDc1IEw2MDMsNDQ5LjQwNTEzMSBaIE01OTEuNzE2MzUyLDQ0OC42NTYwMDMgQzU4Ny40MjM5MDEsNDQ4LjY1NjAwMyA1ODMuOTQzNjA2LDQ0NS4yMjgxNyA1ODMuOTQzNjA2LDQ0MSBDNTgzLjk0MzYwNiw0MzkuNDczNzYyIDU4NC40MDIxOTIsNDM4LjA1NTIyMSA1ODUuMTgzNzQyLDQzNi44NjE1NzcgTDU4My40ODU1NDgsNDM1LjE2MjE3OSBDNTgyLjI4MTgyNSw0MzYuODA2MTQ1IDU4MS41NjQxMyw0MzguODE4NjA0IDU4MS41NjQxMyw0NDEgQzU4MS41NjQxMyw0NDYuNTIyNjQ4IDU4Ni4xMDk4ODUsNDUxIDU5MS43MTYzNTIsNDUxIEM1OTMuODc1MjQzLDQ1MSA1OTUuODcyNjUyLDQ1MC4zMzExMTYgNTk3LjUxNzU0Nyw0NDkuMjAwMjk2IEw1OTUuODE1MTMxLDQ0Ny40OTY2NzQgQzU5NC42MjQwNzMsNDQ4LjIyNzMyNiA1OTMuMjIyOTg0LDQ0OC42NTYwMDMgNTkxLjcxNjM1Miw0NDguNjU2MDAzIFogTTYwMS40MDMxMjgsNDMxLjM2Mzc0MiBMNTk4LjIwMzA1MSw0MjkuMTI0ODAyIEw1OTcuMTgyOTc0LDQzMC41ODAyOTggTDYwMC4zODMwNTEsNDMyLjgxODE4MiBMNjAxLjQwMzEyOCw0MzEuMzYzNzQyIFogTTU5MC40NDc3Miw0MjkuNzUwMzk2IEw1OTIuOTg1NTEyLDQyOS43NTAzOTYgTDU5Mi45ODU1MTIsNDI4LjUwMDI2NCBMNTk0LjI1NDY3MSw0MjguNTAwMjY0IEw1OTQuMjU0NjcxLDQyNiBMNTg5LjE3ODU2LDQyNiBMNTg5LjE3ODU2LDQyOC41MDAyNjQgTDU5MC40NDc3Miw0MjguNTAwMjY0IEw1OTAuNDQ3NzIsNDI5Ljc1MDM5NiBaIE01ODUuMzcxNjA5LDQ0MSBMNTg5LjMyMDUxNiw0NDEgTDU5NC43ODY2MSw0NDYuNDY4MjcyIEM1OTMuODc2ODI2LDQ0Ni45NjUwNTEgNTkyLjgzMDg5MSw0NDcuMjUwMTMyIDU5MS43MTYzNTIsNDQ3LjI1MDEzMiBDNTg4LjIxMjMxLDQ0Ny4yNTAxMzIgNTg1LjM3MTYwOSw0NDQuNDUyMTE3IDU4NS4zNzE2MDksNDQxIFoiIGlkPSJub0xpdmUiPjwvcGF0aD4NCiAgICAgICAgPC9nPg0KICAgIDwvZz4NCjwvc3ZnPg==" alt="There are no events to show.">
+												</div>
+												<div class="text">
+													<div class="first-text"><span>There are currently no live events to show for this sport.</span></div>
+													<div class="second-text"><span>Please select a different sport for live events.</span></div>
+												</div>
+											</div>
+										</div>
+									`;
 							} else {
-								newData.forEach((league, leagueIndex) => {
-									const table = document.createElement('table');
-									const caption = document.createElement('caption');
-									caption.innerText = `LIVE: ${league.league}`;
-									table.appendChild(caption);
+								const table = document.createElement('table');
 
+								const caption = document.createElement('caption');
+								caption.innerText = `LIVE`;
+								table.appendChild(caption);
+
+								newData.forEach((league, leagueIndex) => {
 									const headerRow = document.createElement('tr');
 									headerRow.innerHTML = `
-											<th colspan="5">
-												<a href="">
-													<strong>
-														${league.league}
-														<i class="fa-solid fa-angle-right"></i>
-													</strong>
-												</a>
-											</th>
-											<th>Money Line</th>
-											<th>Handicap</th>
-											<th>
-												<span>Over</span>
-												<span>Under</span>
-											</th>
-										`;
+										<th colspan="5">
+											<a href="#">
+												<strong>
+													${league.league}
+													<i class="fa-solid fa-angle-right"></i>
+												</strong>
+											</a>
+										</th>
+										<th>Money Line</th>
+										<th>Handicap</th>
+										<th>
+											<span>Over</span>
+											<span>Under</span>
+										</th>
+									`;
 									table.appendChild(headerRow);
 
 									league.games.forEach((game, gameIndex) => {

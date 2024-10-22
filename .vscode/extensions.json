@@ -1,3 +1,8 @@
 {
-	"recommendations": ["esbenp.prettier-vscode", "2guys1account.quackrack-cursor", "exodiusstudios.comment-anchors"]
+	"recommendations": [
+		"esbenp.prettier-vscode",
+		"2guys1account.quackrack-cursor",
+		"exodiusstudios.comment-anchors",
+		"illixion.vscode-vibrancy-continued"
+	]
 }
