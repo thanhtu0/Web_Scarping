@@ -314,7 +314,15 @@ async function scrapeData() {
 
 			const noEvents = await page.$('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
 			if (noEvents) {
-				fs.writeFile('live.json', JSON.stringify([], null, 2), (err) => {
+				if (fs.existsSync('live.json')) {
+					const previousData = JSON.parse(fs.readFileSync('live.json', 'utf8'));
+
+					fs.writeFileSync('oldLive.json', JSON.stringify(previousData, null, 2), (err) => {
+						if (err) throw err;
+					});
+				}
+
+				fs.writeFileSync('live.json', JSON.stringify([], null, 2), (err) => {
 					if (err) throw err;
 					console.log('No events, returning empty array.');
 				});
@@ -323,8 +331,6 @@ async function scrapeData() {
 
 				setTimeout(scrapeData, 1000);
 				return;
-			} else {
-				console.error('Error scraping data: ', error.message);
 			}
 		}
 	} catch (error) {
