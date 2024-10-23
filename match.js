@@ -67,9 +67,11 @@ async function scrapeData() {
 						continue;
 					}
 
-					const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
 					// const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
 					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
+
+					// const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
+					const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
 					const startTime = startTimeElement ? startTimeElement.innerText : '';
 
 					const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
@@ -352,10 +354,10 @@ async function scrapeData() {
 		});
 
 		await browser.close();
-		setTimeout(scrapeData, 1000);
+		setTimeout(scrapeData, 50 * 6 * 1000);
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 1000);
+		setTimeout(scrapeData, 50 * 6 * 1000);
 	}
 }
 

@@ -41,7 +41,8 @@ async function scrapeData() {
 					// const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
 					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
 
-					const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
+					// const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
+					const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
 					const timeLive = timeLiveElement ? timeLiveElement.innerText : '';
 
 					const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
@@ -310,7 +311,7 @@ async function scrapeData() {
 
 			await browser.close();
 
-			setTimeout(scrapeData, 1000);
+			setTimeout(scrapeData, 50 * 6 * 1000);
 		} catch (error) {
 			await page.waitForSelector('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
 
@@ -331,13 +332,13 @@ async function scrapeData() {
 
 				await browser.close();
 
-				setTimeout(scrapeData, 1000);
+				setTimeout(scrapeData, 50 * 6 * 1000);
 				return;
 			}
 		}
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 1000);
+		setTimeout(scrapeData, 50 * 6 * 1000);
 	}
 }
 

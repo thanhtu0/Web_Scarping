@@ -8,7 +8,7 @@
           {
             "Home": "Yaquis de Obregon",
             "Away": "Charros de Jalisco",
-            "startTime": "",
+            "startTime": "08:30",
             "moneyLine": {
               "Home": "2.030",
               "Away": "1.800"
@@ -141,7 +141,7 @@
           {
             "Home": "Tomateros de Culiacan",
             "Away": "Sultanes de Monterrey",
-            "startTime": "",
+            "startTime": "08:30",
             "moneyLine": {
               "Home": "2.080",
               "Away": "1.763"
@@ -274,7 +274,7 @@
           {
             "Home": "Algodonerose Guasave",
             "Away": "Caneros De Los Mochis",
-            "startTime": "",
+            "startTime": "09:30",
             "moneyLine": {
               "Home": "2.510",
               "Away": "1.529"
@@ -407,7 +407,7 @@
           {
             "Home": "Mayos de Navojoa",
             "Away": "Naranjeros de Hermosillo",
-            "startTime": "",
+            "startTime": "09:30",
             "moneyLine": {
               "Home": "2.450",
               "Away": "1.558"
@@ -540,7 +540,7 @@
           {
             "Home": "Aguilas de Mexicali",
             "Away": "Venados de Mazatlan",
-            "startTime": "",
+            "startTime": "10:00",
             "moneyLine": {
               "Home": "1.877",
               "Away": "1.943"
@@ -678,7 +678,7 @@
           {
             "Home": "CTBC Brothers",
             "Away": "Uni-President 7-Eleven Lions",
-            "startTime": "",
+            "startTime": "17:35",
             "moneyLine": {
               "Home": "1.746",
               "Away": "2.100"
@@ -821,7 +821,7 @@
           {
             "Home": "New York Yankees",
             "Away": "Los Angeles Dodgers",
-            "startTime": "",
+            "startTime": "07:08",
             "moneyLine": {
               "Home": "2.100",
               "Away": "1.840"
@@ -880,7 +880,7 @@
                 },
                 "-2.5": {
                   "label": "-2.5",
-                  "price": "3.520"
+                  "price": "3.510"
                 },
                 "-3.0": {
                   "label": "-3.0",
@@ -892,77 +892,77 @@
               "Over": {
                 "12.5": {
                   "label": "12.5",
-                  "price": "4.900"
+                  "price": "4.870"
                 },
                 "10.0": {
                   "label": "10.0",
-                  "price": "2.890"
+                  "price": "2.870"
                 },
                 "9.5": {
                   "label": "9.5",
-                  "price": "2.540"
+                  "price": "2.530"
                 },
                 "9.0": {
                   "label": "9.0",
-                  "price": "2.290"
+                  "price": "2.270"
                 },
                 "8.5": {
                   "label": "8.5",
-                  "price": "2.000"
+                  "price": "1.990"
                 },
                 "8.0": {
                   "label": "8.0",
-                  "price": "1.840"
+                  "price": "1.826"
                 },
                 "7.5": {
                   "label": "7.5",
-                  "price": "1.709"
+                  "price": "1.704"
                 },
                 "7.0": {
                   "label": "7.0",
-                  "price": "1.526"
+                  "price": "1.520"
                 },
                 "5.5": {
                   "label": "5.5",
-                  "price": "1.291"
+                  "price": "1.289"
                 }
               },
               "Under": {
                 "12.5": {
                   "label": "12.5",
-                  "price": "1.181"
+                  "price": "1.182"
                 },
                 "10.0": {
                   "label": "10.0",
-                  "price": "1.456"
+                  "price": "1.460"
                 },
                 "9.5": {
                   "label": "9.5",
-                  "price": "1.568"
+                  "price": "1.574"
                 },
                 "9.0": {
                   "label": "9.0",
-                  "price": "1.689"
+                  "price": "1.694"
                 },
                 "8.5": {
                   "label": "8.5",
-                  "price": "1.884"
+                  "price": "1.892"
                 },
                 "8.0": {
                   "label": "8.0",
-                  "price": "2.060"
+                  "price": "2.070"
                 },
                 "7.5": {
                   "label": "7.5",
-                  "price": "2.250"
+                  "price": "2.260"
                 },
                 "7.0": {
                   "label": "7.0",
-                  "price": "2.660"
+                  "price": "2.670"
                 },
                 "5.5": {
                   "label": "5.5",
-                  "price": "3.660"
+                  "price": "3.680"
                 }
               }
             }
