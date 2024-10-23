@@ -311,7 +311,7 @@ async function scrapeData() {
 
 			await browser.close();
 
-			setTimeout(scrapeData, 50 * 6 * 1000);
+			setTimeout(scrapeData, 1000);
 		} catch (error) {
 			await page.waitForSelector('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
 
@@ -332,13 +332,13 @@ async function scrapeData() {
 
 				await browser.close();
 
-				setTimeout(scrapeData, 50 * 6 * 1000);
+				setTimeout(scrapeData, 1000);
 				return;
 			}
 		}
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 50 * 6 * 1000);
+		setTimeout(scrapeData, 1000);
 	}
 }
 
