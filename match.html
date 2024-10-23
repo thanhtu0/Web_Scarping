@@ -181,26 +181,14 @@
 											homeValues[homeMiddleIndex].label === 'Currently Offline' &&
 											awayValues[awayMiddleIndex].label === 'Currently Offline'
 										) {
-											handicapHome = `<button style="cursor: not-allowed;" disabled>
-														<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-													</button>
-													`;
-											handicapAway = `<button style="cursor: not-allowed;" disabled>
-														<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-													</button>
-													`;
+											handicapHome = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
+											handicapAway = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 										} else if (
 											homeValues[homeMiddleIndex].label === 'Unavailable' &&
 											awayValues[awayMiddleIndex].label === 'Unavailable'
 										) {
-											handicapHome = `<button style="cursor: not-allowed;" disabled>
-														<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-													</button>
-													`;
-											handicapAway = `<button style="cursor: not-allowed;" disabled>
-														<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-													</button>
-													`;
+											handicapHome = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
+											handicapAway = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 										} else {
 											handicapHome = `<button style="cursor: pointer;" class="btn-selected" data-group="handicap" data-league="${league.league}" data-game="${gameId}">
 														${homeValues[homeMiddleIndex].label} <br />
@@ -224,17 +212,9 @@
 												let buttonContent;
 
 												if (h.label === 'Currently Offline') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else if (h.label === 'Unavailable') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else {
 													if (oldGame && oldGame.handicap.Home) {
 														const oldValue = Object.values(oldGame.handicap.Home)[index];
@@ -271,17 +251,9 @@
 												let buttonContent;
 
 												if (h.label === 'Currently Offline') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else if (h.label === 'Unavailable') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else {
 													if (oldGame && oldGame.handicap.Away) {
 														const oldValue = Object.values(oldGame.handicap.Away)[index];
@@ -367,30 +339,19 @@
 												: underValues[underMiddleIndex].label;
 
 										let over, under;
+
 										if (
 											overValues[overMiddleIndex].label === 'Currently Offline' &&
 											underValues[underMiddleIndex].label === 'Currently Offline'
 										) {
-											over = `<button style="cursor: not-allowed;" disabled>
-												<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-											</button>
-											`;
-											under = `<button style="cursor: not-allowed;" disabled>
-												<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-											</button>
-											`;
+											over = `<button style="cursor: not-allowed;" disabled<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i</button`;
+											under = `<button style="cursor: not-allowed;" disabled<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i</button`;
 										} else if (
 											overValues[overMiddleIndex].label === 'Unavailable' &&
 											underValues[underMiddleIndex].label === 'Unavailable'
 										) {
-											over = `<button style="cursor: not-allowed;" disabled>
-												<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-											</button>
-											`;
-											under = `<button style="cursor: not-allowed;" disabled>
-												<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-											</button>
-											`;
+											over = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
+											under = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 										} else {
 											over = `<button style="cursor: pointer;" class="btn-selected" data-group="total" data-league="${league.league}" data-game="${gameId}">
 												${overLabel} <br />
@@ -414,17 +375,9 @@
 												let buttonContent;
 
 												if (h.label === 'Currently Offline') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else if (h.label === 'Unavailable') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else {
 													if (oldGame && oldGame.total && oldGame.total.Over) {
 														const oldValue = Object.values(oldGame.total.Over)[index];
@@ -464,17 +417,9 @@
 												let buttonContent;
 
 												if (h.label === 'Currently Offline') {
-													buttonContent = `
-														<button style="cursor: not-allowed;" disabled>
-															<i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i>
-														</button>
-													`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-lock" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else if (h.label === 'Unavailable') {
-													buttonContent = `
-															<button style="cursor: not-allowed;" disabled>
-																<i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i>
-															</button>
-														`;
+													buttonContent = `<button style="cursor: not-allowed;" disabled><i class="fa-solid fa-circle-minus" style="color: #C4C4C4; font-size: 20px;"></i></button>`;
 												} else {
 													if (oldGame && oldGame.total && oldGame.total.Under) {
 														const oldValue = Object.values(oldGame.total.Under)[index];
@@ -566,43 +511,19 @@
 											<td>
 												<div class="handicap-container">
 													<div class="oneValue handicap">${handicapHome}</div>
-													<div
-														class="allValues handicap"
-														style="display: none">
-														${allHandicapHome}
-													</div>
-													<button
-														class="icon handicap-icon"
-														type="submit">
-														<i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i>
-													</button>
-													<div
-														class="allValues handicap"
-														style="display: none">
-														${allHandicapAway}
-													</div>
+													<div class="allValues handicap" style="display: none">${allHandicapHome}</div>
+													<button class="icon handicap-icon" type="submit"><i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i></button>
+													<div class="allValues handicap" style="display: none">${allHandicapAway}</div>
 													<div class="oneValue handicap">${handicapAway}</div>
 												</div>
 											</td>
 											<td>
 												<div class="total-container">
 													<div class="oneValue total">${over}</div>
-													<div
-														class="allValues total"
-														style="display: none">
-														${allOver}
-													</div>
-													<button
-														class="icon total-icon"
-														type="submit">
-														<i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i>
-													</button>
+													<div class="allValues total" style="display: none">${allOver}</div>
+													<button class="icon total-icon"type="submit"><i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i></button>
 													<div class="oneValue total">${under}</div>
-													<div
-														class="allValues total"
-														style="display: none">
-														${allUnder}
-													</div>
+													<div class="allValues total"style="display: none">${allUnder}</div>
 												</div>
 											</td>
 										`;

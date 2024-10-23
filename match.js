@@ -32,19 +32,242 @@ async function scrapeData() {
 			let currentDateText = '';
 			let rowIndex = 0;
 
+			const getPriceValue = (element) => {
+				const priceElement = element.querySelector('span.price-af9054d329c985ad490f');
+				return priceElement ? priceElement.innerText || 'Unavailable' : 'Unavailable';
+			};
+
+			const getTeamsAndTime = (gameElement) => {
+				const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
+				const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
+				return {
+					Home: teams[0] ? teams[0].innerText : 'Unavailable',
+					Away: teams[1] ? teams[1].innerText : 'Unavailable',
+					startTime: startTimeElement ? startTimeElement.innerText : '',
+				};
+			};
+
+			const getMoneyLine = (row) => {
+				const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
+				if (!moneyLineElement) return { Home: 'Unavailable', Away: 'Unavailable' };
+
+				const moneyLines = Array.from(moneyLineElement.querySelectorAll('button.market-btn'));
+				return {
+					Home: getPriceValue(moneyLines[0]),
+					Away: getPriceValue(moneyLines[1]),
+				};
+			};
+
+			const getHandicap = async (row) => {
+				const home = {};
+				const away = {};
+				const handicapIconSelector =
+					'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+				const handicapIcon = row.querySelector(handicapIconSelector);
+
+				if (handicapIcon) {
+					handicapIcon.click();
+					await new Promise((resolve) => setTimeout(resolve, 1000));
+					const handicapElements = row.querySelectorAll(
+						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.buttons-ffb745d9022e203b172d'
+					);
+					handicapElements.forEach((handicapGroup) => {
+						const buttons = Array.from(handicapGroup.querySelectorAll('button.market-btn'));
+						if (buttons.length >= 2) {
+							const homeButton = buttons[0];
+							const awayButton = buttons[1];
+
+							const homeLabel =
+								homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							const homePrice =
+								homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+							const awayLabel =
+								awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							const awayPrice =
+								awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+							if (
+								homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
+								awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+							) {
+								home['Currently Offline'] = {
+									label: 'Currently Offline',
+									price: 'Currently Offline',
+								};
+								away['Currently Offline'] = {
+									label: 'Currently Offline',
+									price: 'Currently Offline',
+								};
+							} else {
+								home[homeLabel] = { label: homeLabel, price: homePrice };
+								away[awayLabel] = { label: awayLabel, price: awayPrice };
+							}
+						}
+					});
+				} else {
+					const buttons = row.querySelectorAll(
+						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) button.market-btn'
+					);
+					if (buttons.length >= 2) {
+						const homeButton = buttons[0];
+						const awayButton = buttons[1];
+
+						const homeLabel =
+							homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+						const homePrice =
+							homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+						const awayLabel =
+							awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+						const awayPrice =
+							awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+						if (
+							homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
+							awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+						) {
+							home['Currently Offline'] = {
+								label: 'Currently Offline',
+								price: 'Currently Offline',
+							};
+							away['Currently Offline'] = {
+								label: 'Currently Offline',
+								price: 'Currently Offline',
+							};
+						} else {
+							home[homeLabel] = { label: homeLabel, price: homePrice };
+							away[awayLabel] = { label: awayLabel, price: awayPrice };
+						}
+					}
+				}
+				return { Home: home, Away: away };
+			};
+
+			const getTotals = async (row) => {
+				const over = {};
+				const under = {};
+				const totalIconSelector =
+					'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+				const totalIcon = row.querySelector(totalIconSelector);
+
+				if (totalIcon) {
+					totalIcon.click();
+					await new Promise((resolve) => setTimeout(resolve, 1000));
+					const totalElements = row.querySelectorAll(
+						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.buttons-ffb745d9022e203b172d'
+					);
+					totalElements.forEach((totalGroup) => {
+						const buttons = Array.from(totalGroup.querySelectorAll('button.market-btn'));
+						if (buttons.length >= 2) {
+							const overButton = buttons[0];
+							const underButton = buttons[1];
+
+							const overLabel =
+								overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							const overPrice =
+								overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+							const underLabel =
+								underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
+								'Unavailable';
+							const underPrice =
+								underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
+								'Unavailable';
+
+							if (
+								overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
+								underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+							) {
+								over['Currently Offline'] = {
+									label: 'Currently Offline',
+									price: 'Currently Offline',
+								};
+								under['Currently Offline'] = {
+									label: 'Currently Offline',
+									price: 'Currently Offline',
+								};
+							} else {
+								const formattedOverLabel = !isNaN(parseFloat(overLabel))
+									? parseFloat(overLabel).toFixed(1)
+									: overLabel;
+								const formattedUnderLabel = !isNaN(parseFloat(underLabel))
+									? parseFloat(underLabel).toFixed(1)
+									: underLabel;
+								over[formattedOverLabel] = { label: formattedOverLabel, price: overPrice };
+								under[formattedUnderLabel] = {
+									label: formattedUnderLabel,
+									price: underPrice,
+								};
+							}
+						}
+					});
+				} else {
+					const buttons = row.querySelectorAll(
+						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) button.market-btn'
+					);
+					if (buttons.length >= 2) {
+						const overButton = buttons[0];
+						const underButton = buttons[1];
+
+						const overLabel =
+							overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+						const overPrice =
+							overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+						const underLabel =
+							underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+						const underPrice =
+							underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+
+						if (
+							overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
+							underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+						) {
+							over['Currently Offline'] = {
+								label: 'Currently Offline',
+								price: 'Currently Offline',
+							};
+							under['Currently Offline'] = {
+								label: 'Currently Offline',
+								price: 'Currently Offline',
+							};
+						} else {
+							const formattedOverLabel = !isNaN(parseFloat(overLabel))
+								? parseFloat(overLabel).toFixed(1)
+								: overLabel;
+							const formattedUnderLabel = !isNaN(parseFloat(underLabel))
+								? parseFloat(underLabel).toFixed(1)
+								: underLabel;
+							over[formattedOverLabel] = { label: formattedOverLabel, price: overPrice };
+							under[formattedUnderLabel] = { label: formattedUnderLabel, price: underPrice };
+						}
+					}
+				}
+
+				const sortedOver = Object.keys(over)
+					.sort((a, b) => parseFloat(b) - parseFloat(a))
+					.reduce((acc, key) => {
+						acc[key] = over[key];
+						return acc;
+					}, {});
+
+				const sortedUnder = Object.keys(under)
+					.sort((a, b) => parseFloat(b) - parseFloat(a))
+					.reduce((acc, key) => {
+						acc[key] = under[key];
+						return acc;
+					}, {});
+				return { Over: sortedOver, Under: sortedUnder };
+			};
+
 			for (const dateSection of dateSections) {
 				const dateText = dateSection.innerText.trim().replace(/\n/g, ' ');
-
-				const matchesForDate = {
-					date: dateText,
-					leagues: [],
-				};
-
+				const matchesForDate = { date: dateText, leagues: [] };
 				let currentLeague = 'Unknown League';
 
 				while (rowIndex < allRows.length) {
 					const row = allRows[rowIndex];
-
 					const rowDateElement = row.previousElementSibling?.matches('div.dateBar-b83858329620e87b99fb')
 						? row.previousElementSibling
 						: null;
@@ -52,9 +275,7 @@ async function scrapeData() {
 						currentDateText = rowDateElement.innerText.trim().replace(/\n/g, ' ');
 					}
 
-					if (currentDateText !== dateText) {
-						break;
-					}
+					if (currentDateText !== dateText) break;
 
 					const leagueElement = row.querySelector('a.rowLink-aed26161c6249b973e05 span.ellipsis');
 					if (leagueElement && leagueElement.innerText.trim() !== '') {
@@ -67,263 +288,11 @@ async function scrapeData() {
 						continue;
 					}
 
-					// const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
-					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
+					const { Home, Away, startTime } = getTeamsAndTime(gameElement);
+					const moneyLine = getMoneyLine(row);
+					const [handicap, total] = await Promise.all([getHandicap(row), getTotals(row)]);
 
-					// const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
-					const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
-					const startTime = startTimeElement ? startTimeElement.innerText : '';
-
-					const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
-					if (!moneyLineElement) {
-						rowIndex++;
-						continue;
-					}
-
-					const moneyLines = Array.from(moneyLineElement.querySelectorAll('button.market-btn'));
-					const getPriceValue = (element) => {
-						const priceElement = element.querySelector('span.price-af9054d329c985ad490f');
-						if (priceElement) {
-							return priceElement.innerText || 'Unavailable';
-						} else if (element.querySelector('svg.offline-db9cbe9620730b144e66')) {
-							return 'Currently Offline';
-						}
-						return 'Unavailable';
-					};
-
-					const Home = getPriceValue(moneyLines[0]) || 'Unavailable';
-					const Away = getPriceValue(moneyLines[1]) || 'Unavailable';
-
-					const home = {};
-					const away = {};
-					const handicapIconSelector =
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
-					const handicapIcon = row.querySelector(handicapIconSelector);
-
-					try {
-						if (handicapIcon) {
-							handicapIcon.click();
-							await new Promise((resolve) => setTimeout(resolve, 1000));
-							const handicapElements = row.querySelectorAll('div.buttons-ffb745d9022e203b172d');
-							handicapElements.forEach((handicapGroup) => {
-								const buttons = Array.from(handicapGroup.querySelectorAll('button.market-btn'));
-
-								if (buttons.length >= 2) {
-									const homeButton = buttons[0];
-									const awayButton = buttons[1];
-
-									const homeLabel =
-										homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
-									const homePrice =
-										homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
-
-									const awayLabel =
-										awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
-									const awayPrice =
-										awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
-
-									if (
-										homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-										awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
-									) {
-										home['Currently Offline'] = {
-											label: 'Currently Offline',
-											price: 'Currently Offline',
-										};
-										away['Currently Offline'] = {
-											label: 'Currently Offline',
-											price: 'Currently Offline',
-										};
-									} else {
-										home[homeLabel] = { label: homeLabel, price: homePrice };
-										away[awayLabel] = { label: awayLabel, price: awayPrice };
-									}
-								}
-							});
-						} else {
-							const buttons = row.querySelectorAll(
-								'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) button.market-btn'
-							);
-							if (buttons.length >= 2) {
-								const homeButton = buttons[0];
-								const awayButton = buttons[1];
-
-								const homeLabel =
-									homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
-								const homePrice =
-									homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
-
-								const awayLabel =
-									awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
-								const awayPrice =
-									awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
-
-								if (
-									homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-									awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
-								) {
-									home['Currently Offline'] = {
-										label: 'Currently Offline',
-										price: 'Currently Offline',
-									};
-									away['Currently Offline'] = {
-										label: 'Currently Offline',
-										price: 'Currently Offline',
-									};
-								} else {
-									home[homeLabel] = { label: homeLabel, price: homePrice };
-									away[awayLabel] = { label: awayLabel, price: awayPrice };
-								}
-							}
-						}
-					} catch (error) {
-						console.error('Error interacting with handicapIcon: ', error.message);
-					}
-
-					const over = {};
-					const under = {};
-					const totalIconSelector =
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
-					const totalIcon = row.querySelector(totalIconSelector);
-
-					try {
-						if (totalIcon) {
-							try {
-								totalIcon.click();
-								await new Promise((resolve) => setTimeout(resolve, 1000));
-								const totalElements = row.querySelectorAll(
-									'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 div.container-f8262afac05676590fa1 div.buttons-ffb745d9022e203b172d'
-								);
-								totalElements.forEach((totalGroup) => {
-									const buttons = Array.from(totalGroup.querySelectorAll('button.market-btn'));
-									if (buttons.length >= 2) {
-										const overButton = buttons[0];
-										const underButton = buttons[1];
-
-										const overLabel =
-											overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-											'Unavailable';
-										const overPrice =
-											overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-											'Unavailable';
-
-										const underLabel =
-											underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-											'Unavailable';
-										const underPrice =
-											underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-											'Unavailable';
-
-										if (
-											overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-											underButton.querySelector('svg.offline-db9cbe9620730b144e66')
-										) {
-											over['Currently Offline'] = {
-												label: 'Currently Offline',
-												price: 'Currently Offline',
-											};
-											under['Currently Offline'] = {
-												label: 'Currently Offline',
-												price: 'Currently Offline',
-											};
-										} else {
-											const formattedOverLabel = !isNaN(parseFloat(overLabel))
-												? parseFloat(overLabel).toFixed(1)
-												: overLabel;
-											const formattedUnderLabel = !isNaN(parseFloat(underLabel))
-												? parseFloat(underLabel).toFixed(1)
-												: underLabel;
-											over[formattedOverLabel] = { label: formattedOverLabel, price: overPrice };
-											under[formattedUnderLabel] = {
-												label: formattedUnderLabel,
-												price: underPrice,
-											};
-										}
-									}
-								});
-							} catch (error) {
-								console.error('Error clicking totalIcon: ', error);
-							}
-						} else {
-							const buttons = row.querySelectorAll(
-								'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) button.market-btn'
-							);
-							if (buttons.length >= 2) {
-								const overButton = buttons[0];
-								const underButton = buttons[1];
-
-								const overLabel =
-									overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
-								const overPrice =
-									overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
-
-								const underLabel =
-									underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
-								const underPrice =
-									underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
-
-								if (
-									overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-									underButton.querySelector('svg.offline-db9cbe9620730b144e66')
-								) {
-									over['Currently Offline'] = {
-										label: 'Currently Offline',
-										price: 'Currently Offline',
-									};
-									under['Currently Offline'] = {
-										label: 'Currently Offline',
-										price: 'Currently Offline',
-									};
-								} else {
-									const formattedOverLabel = !isNaN(parseFloat(overLabel))
-										? parseFloat(overLabel).toFixed(1)
-										: overLabel;
-									const formattedUnderLabel = !isNaN(parseFloat(underLabel))
-										? parseFloat(underLabel).toFixed(1)
-										: underLabel;
-									over[formattedOverLabel] = { label: formattedOverLabel, price: overPrice };
-									under[formattedUnderLabel] = { label: formattedUnderLabel, price: underPrice };
-								}
-							}
-						}
-					} catch (error) {
-						console.error('Error interacting with totalIcon: ', error.message);
-					}
-
-					const sortedOver = Object.keys(over)
-						.sort((a, b) => parseFloat(b) - parseFloat(a))
-						.reduce((acc, key) => {
-							acc[key] = over[key];
-							return acc;
-						}, {});
-
-					const sortedUnder = Object.keys(under)
-						.sort((a, b) => parseFloat(b) - parseFloat(a))
-						.reduce((acc, key) => {
-							acc[key] = under[key];
-							return acc;
-						}, {});
-
-					const game = {
-						Home: teams[0] ? teams[0].innerText : 'Unavailable',
-						Away: teams[1] ? teams[1].innerText : 'Unavailable',
-						startTime: startTime,
-						moneyLine: { Home: Home, Away: Away },
-						handicap: { Home: home, Away: away },
-						total: { Over: sortedOver, Under: sortedUnder },
-					};
+					const game = { Home, Away, startTime, moneyLine, handicap, total };
 
 					let league = matchesForDate.leagues.find((l) => l.league === currentLeague);
 					if (!league) {
@@ -334,16 +303,13 @@ async function scrapeData() {
 
 					rowIndex++;
 				}
-
 				results.push(matchesForDate);
 			}
-
 			return results;
 		});
 
 		if (fs.existsSync('match.json')) {
 			const previousData = JSON.parse(fs.readFileSync('match.json', 'utf8'));
-
 			fs.writeFileSync('oldMatch.json', JSON.stringify(previousData, null, 2), (err) => {
 				if (err) throw err;
 			});
@@ -354,10 +320,10 @@ async function scrapeData() {
 		});
 
 		await browser.close();
-		setTimeout(scrapeData, 1000);
+		setTimeout(scrapeData, 50 * 6 * 1000);
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 1000);
+		setTimeout(scrapeData, 50 * 6 * 1000);
 	}
 }
 
