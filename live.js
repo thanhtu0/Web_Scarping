@@ -38,7 +38,9 @@ async function scrapeData() {
 					const gameElement = row.querySelector('div.matchupMetadata-ea084f794b1bd8c45ab5');
 					if (!gameElement) continue;
 
-					const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
+					// const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
+					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
+
 					const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
 					const timeLive = timeLiveElement ? timeLiveElement.innerText : '';
 
