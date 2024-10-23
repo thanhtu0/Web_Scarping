@@ -320,10 +320,10 @@ async function scrapeData() {
 		});
 
 		await browser.close();
-		setTimeout(scrapeData, 50 * 6 * 1000);
+		setTimeout(scrapeData, 1000);
 	} catch (error) {
 		console.error('Error scraping data: ', error.message);
-		setTimeout(scrapeData, 50 * 6 * 1000);
+		setTimeout(scrapeData, 1000);
 	}
 }
 
