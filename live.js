@@ -22,38 +22,36 @@ async function scrapeData() {
 		});
 
 		try {
-			await page.waitForSelector('div.row-bbd1776fd58233709296');
+			await page.waitForSelector('div.row-u9F3b9WCM3');
 
 			const matchesByLeague = await page.evaluate(async () => {
-				const rows = Array.from(document.querySelectorAll('div.row-bbd1776fd58233709296'));
+				const rows = Array.from(document.querySelectorAll('div.row-u9F3b9WCM3'));
 				const leagues = {};
 				let currentLeague = 'Unknown League';
 
 				for (const row of rows) {
-					const leagueElement = row.querySelector('a.rowLink-aed26161c6249b973e05 span.ellipsis');
+					const leagueElement = row.querySelector('a.rowLink-rtJhYcYkm5 span.ellipsis');
 					if (leagueElement && leagueElement.innerText.trim() !== '') {
 						currentLeague = leagueElement.innerText.trim();
 					}
 
-					const gameElement = row.querySelector('div.matchupMetadata-ea084f794b1bd8c45ab5');
+					const gameElement = row.querySelector('div.matchupMetadata-ghPeUsb2MR');
 					if (!gameElement) continue;
 
-					// const teams = Array.from(gameElement.querySelectorAll('span.event-row-participant'));
-					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
+					const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-EDDYv5xEfd'));
 
-					// const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242 span');
-					const timeLiveElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
+					const timeLiveElement = gameElement.querySelector('div.matchupDate-tnomIYorwa');
 					const timeLive = timeLiveElement ? timeLiveElement.innerText : '';
 
-					const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
+					const moneyLineElement = row.querySelector('div.moneyline-i2WQM8REwI');
 					if (!moneyLineElement) continue;
 
 					const moneyLines = Array.from(moneyLineElement.querySelectorAll('button.market-btn'));
 					const getPriceValue = (element) => {
-						const priceElement = element.querySelector('span.price-af9054d329c985ad490f');
+						const priceElement = element.querySelector('span.price-r5BU0ynJha');
 						if (priceElement) {
 							return priceElement.innerText || 'Unavailable';
-						} else if (element.querySelector('svg.offline-db9cbe9620730b144e66')) {
+						} else if (element.querySelector('svg.offline-nbnL6WIHML')) {
 							return 'Currently Offline';
 						}
 						return 'Unavailable';
@@ -65,7 +63,7 @@ async function scrapeData() {
 					const home = {};
 					const away = {};
 					const handicapIconSelector =
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+						'div.buttons-j19Jlcwsi9:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
 					const handicapIcon = row.querySelector(handicapIconSelector);
 
 					try {
@@ -82,22 +80,18 @@ async function scrapeData() {
 									const awayButton = buttons[1];
 
 									const homeLabel =
-										homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
+										homeButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 									const homePrice =
-										homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
+										homeButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 									const awayLabel =
-										awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
+										awayButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 									const awayPrice =
-										awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
+										awayButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 									if (
-										homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-										awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+										homeButton.querySelector('svg.offline-nbnL6WIHML') &&
+										awayButton.querySelector('svg.offline-nbnL6WIHML')
 									) {
 										home['Currently Offline'] = {
 											label: 'Currently Offline',
@@ -115,29 +109,25 @@ async function scrapeData() {
 							});
 						} else {
 							const buttons = row.querySelectorAll(
-								'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) button.market-btn'
+								'div.buttons-j19Jlcwsi9:nth-child(3) button.market-btn'
 							);
 							if (buttons.length >= 2) {
 								const homeButton = buttons[0];
 								const awayButton = buttons[1];
 
 								const homeLabel =
-									homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
+									homeButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 								const homePrice =
-									homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
+									homeButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 								const awayLabel =
-									awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
+									awayButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 								const awayPrice =
-									awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
+									awayButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 								if (
-									homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-									awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+									homeButton.querySelector('svg.offline-nbnL6WIHML') &&
+									awayButton.querySelector('svg.offline-nbnL6WIHML')
 								) {
 									home['Currently Offline'] = {
 										label: 'Currently Offline',
@@ -158,7 +148,7 @@ async function scrapeData() {
 					}
 
 					const totalIconSelector =
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+						'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
 					const totalIcon = row.querySelector(totalIconSelector);
 
 					const over = {};
@@ -168,7 +158,7 @@ async function scrapeData() {
 							totalIcon.click();
 							await new Promise((resolve) => setTimeout(resolve, 1000));
 							const totalElements = row.querySelectorAll(
-								'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 div.container-f8262afac05676590fa1 div.buttons-ffb745d9022e203b172d'
+								'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-c20751d3d672e2ddab42 div.container-f8262afac05676590fa1 div.buttons-ffb745d9022e203b172d'
 							);
 							totalElements.forEach((totalGroup) => {
 								const buttons = Array.from(totalGroup.querySelectorAll('button.market-btn'));
@@ -177,22 +167,18 @@ async function scrapeData() {
 									const underButton = buttons[1];
 
 									const overLabel =
-										overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
+										overButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 									const overPrice =
-										overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
+										overButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 									const underLabel =
-										underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-										'Unavailable';
+										underButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 									const underPrice =
-										underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-										'Unavailable';
+										underButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 									if (
-										overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-										underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+										overButton.querySelector('svg.offline-nbnL6WIHML') &&
+										underButton.querySelector('svg.offline-nbnL6WIHML')
 									) {
 										over['Currently Offline'] = {
 											label: 'Currently Offline',
@@ -216,29 +202,25 @@ async function scrapeData() {
 							});
 						} else {
 							const buttons = row.querySelectorAll(
-								'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) button.market-btn'
+								'div.buttons-j19Jlcwsi9:nth-child(4) button.market-btn'
 							);
 							if (buttons.length >= 2) {
 								const overButton = buttons[0];
 								const underButton = buttons[1];
 
 								const overLabel =
-									overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
+									overButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 								const overPrice =
-									overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
+									overButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 								const underLabel =
-									underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
-									'Unavailable';
+									underButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 								const underPrice =
-									underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
-									'Unavailable';
+									underButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 								if (
-									overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-									underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+									overButton.querySelector('svg.offline-nbnL6WIHML') &&
+									underButton.querySelector('svg.offline-nbnL6WIHML')
 								) {
 									over['Currently Offline'] = {
 										label: 'Currently Offline',
@@ -313,9 +295,9 @@ async function scrapeData() {
 
 			setTimeout(scrapeData, 1000);
 		} catch (error) {
-			await page.waitForSelector('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
+			await page.waitForSelector('div.noEventsContainer-z7z9wBr6LD ');
 
-			const noEvents = await page.$('div.noEventsContainer-cfbfb3f7006be8b0dcf6');
+			const noEvents = await page.$('div.noEventsContainer-z7z9wBr6LD ');
 			if (noEvents) {
 				if (fs.existsSync('live.json')) {
 					const previousData = JSON.parse(fs.readFileSync('live.json', 'utf8'));

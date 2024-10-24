@@ -21,25 +21,25 @@ async function scrapeData() {
 			timeout: 60000,
 		});
 
-		await page.waitForSelector('div.dateBar-b83858329620e87b99fb');
-		await page.waitForSelector('div.row-bbd1776fd58233709296');
+		await page.waitForSelector('div.dateBar-Jrg4WDKWIO');
+		await page.waitForSelector('div.row-u9F3b9WCM3');
 
 		const matchesByDate = await page.evaluate(async () => {
-			const dateSections = Array.from(document.querySelectorAll('div.dateBar-b83858329620e87b99fb'));
-			const allRows = Array.from(document.querySelectorAll('div.row-bbd1776fd58233709296'));
+			const dateSections = Array.from(document.querySelectorAll('div.dateBar-Jrg4WDKWIO'));
+			const allRows = Array.from(document.querySelectorAll('div.row-u9F3b9WCM3'));
 
 			let results = [];
 			let currentDateText = '';
 			let rowIndex = 0;
 
 			const getPriceValue = (element) => {
-				const priceElement = element.querySelector('span.price-af9054d329c985ad490f');
+				const priceElement = element.querySelector('span.price-r5BU0ynJha');
 				return priceElement ? priceElement.innerText || 'Unavailable' : 'Unavailable';
 			};
 
 			const getTeamsAndTime = (gameElement) => {
-				const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-d8bf9c447dde89f4b6d3'));
-				const startTimeElement = gameElement.querySelector('div.matchupDate-b67a26218a2bc1a1f242');
+				const teams = Array.from(gameElement.querySelectorAll('span.gameInfoLabel-EDDYv5xEfd'));
+				const startTimeElement = gameElement.querySelector('div.matchupDate-tnomIYorwa');
 				return {
 					Home: teams[0] ? teams[0].innerText : 'Unavailable',
 					Away: teams[1] ? teams[1].innerText : 'Unavailable',
@@ -48,7 +48,7 @@ async function scrapeData() {
 			};
 
 			const getMoneyLine = (row) => {
-				const moneyLineElement = row.querySelector('div.moneyline-b659033c444c08949788');
+				const moneyLineElement = row.querySelector('div.moneyline-i2WQM8REwI');
 				if (!moneyLineElement) return { Home: 'Unavailable', Away: 'Unavailable' };
 
 				const moneyLines = Array.from(moneyLineElement.querySelectorAll('button.market-btn'));
@@ -62,14 +62,14 @@ async function scrapeData() {
 				const home = {};
 				const away = {};
 				const handicapIconSelector =
-					'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+					'div.buttons-j19Jlcwsi9:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
 				const handicapIcon = row.querySelector(handicapIconSelector);
 
 				if (handicapIcon) {
 					handicapIcon.click();
 					await new Promise((resolve) => setTimeout(resolve, 1000));
 					const handicapElements = row.querySelectorAll(
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) div.buttons-ffb745d9022e203b172d'
+						'div.buttons-j19Jlcwsi9:nth-child(3) div.buttons-ffb745d9022e203b172d'
 					);
 					handicapElements.forEach((handicapGroup) => {
 						const buttons = Array.from(handicapGroup.querySelectorAll('button.market-btn'));
@@ -78,18 +78,18 @@ async function scrapeData() {
 							const awayButton = buttons[1];
 
 							const homeLabel =
-								homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+								homeButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 							const homePrice =
-								homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+								homeButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 							const awayLabel =
-								awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+								awayButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 							const awayPrice =
-								awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+								awayButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 							if (
-								homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-								awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+								homeButton.querySelector('svg.offline-nbnL6WIHML') &&
+								awayButton.querySelector('svg.offline-nbnL6WIHML')
 							) {
 								home['Currently Offline'] = {
 									label: 'Currently Offline',
@@ -107,25 +107,25 @@ async function scrapeData() {
 					});
 				} else {
 					const buttons = row.querySelectorAll(
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(3) button.market-btn'
+						'div.buttons-j19Jlcwsi9:nth-child(3) button.market-btn'
 					);
 					if (buttons.length >= 2) {
 						const homeButton = buttons[0];
 						const awayButton = buttons[1];
 
 						const homeLabel =
-							homeButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							homeButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 						const homePrice =
-							homeButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+							homeButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 						const awayLabel =
-							awayButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							awayButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 						const awayPrice =
-							awayButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+							awayButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 						if (
-							homeButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-							awayButton.querySelector('svg.offline-db9cbe9620730b144e66')
+							homeButton.querySelector('svg.offline-nbnL6WIHML') &&
+							awayButton.querySelector('svg.offline-nbnL6WIHML')
 						) {
 							home['Currently Offline'] = {
 								label: 'Currently Offline',
@@ -148,14 +148,14 @@ async function scrapeData() {
 				const over = {};
 				const under = {};
 				const totalIconSelector =
-					'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+					'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
 				const totalIcon = row.querySelector(totalIconSelector);
 
 				if (totalIcon) {
 					totalIcon.click();
 					await new Promise((resolve) => setTimeout(resolve, 1000));
 					const totalElements = row.querySelectorAll(
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) div.buttons-ffb745d9022e203b172d'
+						'div.buttons-j19Jlcwsi9:nth-child(4) div.buttons-ffb745d9022e203b172d'
 					);
 					totalElements.forEach((totalGroup) => {
 						const buttons = Array.from(totalGroup.querySelectorAll('button.market-btn'));
@@ -164,20 +164,20 @@ async function scrapeData() {
 							const underButton = buttons[1];
 
 							const overLabel =
-								overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+								overButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 							const overPrice =
-								overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+								overButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 							const underLabel =
-								underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText ||
+								underButton.querySelector('span.label-GT4CkXEOFj')?.innerText ||
 								'Unavailable';
 							const underPrice =
-								underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText ||
+								underButton.querySelector('span.price-r5BU0ynJha')?.innerText ||
 								'Unavailable';
 
 							if (
-								overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-								underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+								overButton.querySelector('svg.offline-nbnL6WIHML') &&
+								underButton.querySelector('svg.offline-nbnL6WIHML')
 							) {
 								over['Currently Offline'] = {
 									label: 'Currently Offline',
@@ -204,25 +204,25 @@ async function scrapeData() {
 					});
 				} else {
 					const buttons = row.querySelectorAll(
-						'div.buttons-f5f4995cc2c8bd104b1a:nth-child(4) button.market-btn'
+						'div.buttons-j19Jlcwsi9:nth-child(4) button.market-btn'
 					);
 					if (buttons.length >= 2) {
 						const overButton = buttons[0];
 						const underButton = buttons[1];
 
 						const overLabel =
-							overButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							overButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 						const overPrice =
-							overButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+							overButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 						const underLabel =
-							underButton.querySelector('span.label-e0291710e17e8c18f43f')?.innerText || 'Unavailable';
+							underButton.querySelector('span.label-GT4CkXEOFj')?.innerText || 'Unavailable';
 						const underPrice =
-							underButton.querySelector('span.price-af9054d329c985ad490f')?.innerText || 'Unavailable';
+							underButton.querySelector('span.price-r5BU0ynJha')?.innerText || 'Unavailable';
 
 						if (
-							overButton.querySelector('svg.offline-db9cbe9620730b144e66') &&
-							underButton.querySelector('svg.offline-db9cbe9620730b144e66')
+							overButton.querySelector('svg.offline-nbnL6WIHML') &&
+							underButton.querySelector('svg.offline-nbnL6WIHML')
 						) {
 							over['Currently Offline'] = {
 								label: 'Currently Offline',
@@ -268,7 +268,7 @@ async function scrapeData() {
 
 				while (rowIndex < allRows.length) {
 					const row = allRows[rowIndex];
-					const rowDateElement = row.previousElementSibling?.matches('div.dateBar-b83858329620e87b99fb')
+					const rowDateElement = row.previousElementSibling?.matches('div.dateBar-Jrg4WDKWIO')
 						? row.previousElementSibling
 						: null;
 					if (rowDateElement) {
@@ -277,12 +277,12 @@ async function scrapeData() {
 
 					if (currentDateText !== dateText) break;
 
-					const leagueElement = row.querySelector('a.rowLink-aed26161c6249b973e05 span.ellipsis');
+					const leagueElement = row.querySelector('a.rowLink-rtJhYcYkm5 span.ellipsis');
 					if (leagueElement && leagueElement.innerText.trim() !== '') {
 						currentLeague = leagueElement.innerText.trim();
 					}
 
-					const gameElement = row.querySelector('div.matchupMetadata-ea084f794b1bd8c45ab5');
+					const gameElement = row.querySelector('div.matchupMetadata-ghPeUsb2MR');
 					if (!gameElement) {
 						rowIndex++;
 						continue;
