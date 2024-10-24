@@ -1,6 +1,29 @@
 [
   {
     "date": "SAT, OCT 26, 2024",
-    "leagues": []
+    "leagues": [
+      {
+        "league": "MLB",
+        "games": [
+          {
+            "Home": "New York Yankees",
+            "Away": "Los Angeles Dodgers",
+            "startTime": "07:08",
+            "moneyLine": {
+              "Home": "2.100",
+              "Away": "1.840"
+            },
+            "handicap": {
+              "Home": {},
+              "Away": {}
+            },
+            "total": {
+              "Over": {},
+              "Under": {}
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -63,14 +63,14 @@ async function scrapeData() {
 					const home = {};
 					const away = {};
 					const handicapIconSelector =
-						'div.buttons-j19Jlcwsi9:nth-child(3) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+						'div.buttons-j19Jlcwsi9:nth-child(3) div.alternates-PCB1HT1nLi a.expandBtn-bhQlYCR2vJ';
 					const handicapIcon = row.querySelector(handicapIconSelector);
 
 					try {
 						if (handicapIcon) {
 							handicapIcon.click();
 							await new Promise((resolve) => setTimeout(resolve, 1000));
-							const handicapElements = row.querySelectorAll('div.buttons-ffb745d9022e203b172d');
+							const handicapElements = row.querySelectorAll('div.buttons-kyb_t0XZAi');
 
 							handicapElements.forEach((handicapGroup) => {
 								const buttons = Array.from(handicapGroup.querySelectorAll('button.market-btn'));
@@ -148,7 +148,7 @@ async function scrapeData() {
 					}
 
 					const totalIconSelector =
-						'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-c20751d3d672e2ddab42 a.expandBtn-e1425602476bc9f253e1';
+						'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-PCB1HT1nLi a.expandBtn-bhQlYCR2vJ';
 					const totalIcon = row.querySelector(totalIconSelector);
 
 					const over = {};
@@ -158,7 +158,7 @@ async function scrapeData() {
 							totalIcon.click();
 							await new Promise((resolve) => setTimeout(resolve, 1000));
 							const totalElements = row.querySelectorAll(
-								'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-c20751d3d672e2ddab42 div.container-f8262afac05676590fa1 div.buttons-ffb745d9022e203b172d'
+								'div.buttons-j19Jlcwsi9:nth-child(4) div.alternates-PCB1HT1nLi div.container-f8262afac05676590fa1 div.buttons-kyb_t0XZAi'
 							);
 							totalElements.forEach((totalGroup) => {
 								const buttons = Array.from(totalGroup.querySelectorAll('button.market-btn'));
